@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultados — Minas Climatização</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style-tv.css">
+</head>
+<body class="tv">
+  <div class="tv-app">
+    <header class="tv-header">
+      <img src="assets/logo.png" alt="Minas Climatização" class="tv-logo">
+      <h1 class="tv-title">Resultados — Metas, Pontos e Bônus</h1>
+      <div class="tv-controls">
+        <label>
+          <span>Mês/Ano</span>
+          <input type="month" id="tv-mes">
+        </label>
+        <a href="index.html" class="btn btn-ghost btn-sm">Voltar ao sistema</a>
+      </div>
+    </header>
+
+    <main class="tv-main" id="tv-main">
+      <p class="tv-loading">Carregando…</p>
+    </main>
+
+    <footer class="tv-footer">
+      <p>Minas Climatização · Documento interno</p>
+      <p id="tv-updated" class="tv-updated"></p>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>window.MINAS_SUPABASE = window.MINAS_SUPABASE || {};</script>
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="shared.js"></script>
+  <script src="resultados.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Metas, Pontos e Bônus — Minas Climatização</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <a href="index.html" class="logo-wrap">
+        <img src="assets/logo.png" alt="Minas Climatização" class="logo-img">
+      </a>
+      <p class="subtitle">Sistema Oficial de Metas, Pontos e Bônus</p>
+      <a href="resultados.html" class="btn btn-tv">Ver resultados na TV</a>
+    </header>
+
+    <nav class="tabs">
+      <button type="button" class="tab active" data-tab="equipes">Equipes</button>
+      <button type="button" class="tab" data-tab="producao">Produção</button>
+      <button type="button" class="tab" data-tab="qualidade">Qualidade</button>
+      <button type="button" class="tab" data-tab="pmoc">PMOC</button>
+    </nav>
+
+    <main class="main">
+      <section id="equipes" class="panel active">
+        <h2>Carros / Equipes</h2>
+        <p class="hint">1 técnico + 1 auxiliar por carro. Jornada 07h–17h.</p>
+        <form id="form-equipe" class="card form-card">
+          <div class="row">
+            <label>
+              <span>Identificação do carro</span>
+              <input type="text" id="equipe-carro" placeholder="Ex: Carro 01" required>
+            </label>
+            <label>
+              <span>Técnico</span>
+              <input type="text" id="equipe-tecnico" placeholder="Nome do técnico" required>
+            </label>
+            <label>
+              <span>Auxiliar</span>
+              <input type="text" id="equipe-auxiliar" placeholder="Nome do auxiliar" required>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar equipe</button>
+        </form>
+        <div class="card">
+          <h3>Equipes cadastradas</h3>
+          <ul id="lista-equipes" class="lista"></ul>
+        </div>
+      </section>
+
+      <section id="producao" class="panel">
+        <h2>Produção diária</h2>
+        <p class="hint">Instalação = 3 pts · Limpeza química = 1 pt.</p>
+        <form id="form-producao" class="card form-card">
+          <div class="row">
+            <label>
+              <span>Data</span>
+              <input type="date" id="prod-data" required>
+            </label>
+            <label>
+              <span>Carro</span>
+              <select id="prod-equipe" required></select>
+            </label>
+            <label>
+              <span>Instalações padrão</span>
+              <input type="number" id="prod-instalacoes" min="0" value="0">
+            </label>
+            <label>
+              <span>Limpezas químicas</span>
+              <input type="number" id="prod-limpezas" min="0" value="0">
+            </label>
+          </div>
+          <p class="pontos-preview">Pontos do dia: <strong id="preview-pontos">0</strong></p>
+          <button type="submit" class="btn btn-primary">Registrar produção</button>
+        </form>
+        <div class="card">
+          <h3>Últimos registros</h3>
+          <div class="filters">
+            <label>
+              <span>Mês/Ano</span>
+              <input type="month" id="filtro-prod-mes">
+            </label>
+            <button type="button" class="btn btn-ghost" id="btn-filtrar-prod">Filtrar</button>
+          </div>
+          <ul id="lista-producao" class="lista"></ul>
+        </div>
+      </section>
+
+      <section id="qualidade" class="panel">
+        <h2>Regras de qualidade</h2>
+        <p class="hint">Retorno Tipo A, checklist ou fotos em falta → perda do bônus operacional.</p>
+        <form id="form-qualidade" class="card form-card">
+          <div class="row">
+            <label>
+              <span>Mês/Ano</span>
+              <input type="month" id="qual-mes" required>
+            </label>
+            <label>
+              <span>Carro</span>
+              <select id="qual-equipe" required></select>
+            </label>
+          </div>
+          <div class="row checks">
+            <label class="check">
+              <input type="checkbox" id="qual-retorno-a" value="1">
+              <span>Teve retorno Tipo A (erro técnico)</span>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="qual-checklist">
+              <span>Checklist preenchido</span>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="qual-fotos">
+              <span>Evidências fotográficas</span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar qualidade</button>
+        </form>
+        <div class="card">
+          <h3>Registros de qualidade</h3>
+          <ul id="lista-qualidade" class="lista"></ul>
+        </div>
+      </section>
+
+      <section id="pmoc" class="panel">
+        <h2>PMOC – Responsabilidade técnica</h2>
+        <p class="hint">R$ 40/mês por contrato ativo. Falha técnica → perda do bônus PMOC do mês.</p>
+        <form id="form-pmoc" class="card form-card">
+          <div class="row">
+            <label>
+              <span>Contrato / referência</span>
+              <input type="text" id="pmoc-ref" placeholder="Ex: PMOC-001" required>
+            </label>
+            <label>
+              <span>Técnico responsável</span>
+              <select id="pmoc-tecnico"></select>
+            </label>
+            <label class="check">
+              <input type="checkbox" id="pmoc-ativo" checked>
+              <span>Contrato ativo</span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar contrato PMOC</button>
+        </form>
+        <form id="form-pmoc-falha" class="card form-card">
+          <h3>Registrar falha técnica (perda bônus PMOC)</h3>
+          <div class="row">
+            <label>
+              <span>Mês/Ano</span>
+              <input type="month" id="pmoc-falha-mes" required>
+            </label>
+            <label>
+              <span>Técnico</span>
+              <select id="pmoc-falha-tecnico"></select>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-danger">Registrar falha</button>
+        </form>
+        <div class="card">
+          <h3>Contratos PMOC</h3>
+          <ul id="lista-pmoc" class="lista"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p id="save-status" class="save-status" aria-live="polite"></p>
+      <p>Documento interno – Uso restrito. Minas Climatização.</p>
+      <p>
+        <button type="button" class="btn btn-ghost btn-sm" id="btn-exportar">Exportar backup</button>
+        <input type="file" id="input-importar" accept=".json" hidden>
+        <button type="button" class="btn btn-ghost btn-sm" id="btn-importar">Importar backup</button>
+      </p>
+    </footer>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>window.MINAS_SUPABASE = window.MINAS_SUPABASE || {};</script>
+  <script src="config.js"></script>
+  <script src="db.js"></script>
+  <script src="shared.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
